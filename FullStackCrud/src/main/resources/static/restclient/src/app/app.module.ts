@@ -2,11 +2,13 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { RouterModule, Routes } from '@angular/router';
+import { Route } from '@angular/compiler/src/core';
+import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
 import { ListUserComponent } from './components/list-user/list-user.component';
 import { UserFormComponent } from './components/user-form/user-form.component';
-import { Route } from '@angular/compiler/src/core';
+import { UserService } from './shared-service/user.service';
 
 const appRoutes: Routes = [
   { path: '', component: ListUserComponent },
@@ -21,9 +23,10 @@ const appRoutes: Routes = [
   ],
   imports: [
     BrowserModule,
+    HttpModule,
     RouterModule.forRoot(appRoutes)
   ],
-  providers: [],
+  providers: [UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
