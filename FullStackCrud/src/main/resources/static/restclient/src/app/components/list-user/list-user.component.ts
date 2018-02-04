@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../shared-service/user.service';
 import { User } from '../../user';
+import { error } from 'selenium-webdriver';
 
 @Component({
   selector: 'app-list-user',
@@ -15,10 +16,17 @@ export class ListUserComponent implements OnInit {
   ngOnInit() {
     this._userService.getUsers().subscribe((users) => {
       console.log(users);
-      this.users=users;
+      this.users = users;
     }, (error) => {
       console.log(error);
     })
   }
 
+  deleteUser(user) {
+    this._userService.deleteUser(user.id).subscribe((data) => {
+      this.users.splice(this.users.indexOf(user), 1);
+    }, (error) => {
+      console.log(error);
+    });
+  }
 }
