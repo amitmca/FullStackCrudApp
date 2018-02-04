@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../shared-service/user.service';
 import { User } from '../../user';
 import { error } from 'selenium-webdriver';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-list-user',
@@ -11,7 +12,7 @@ import { error } from 'selenium-webdriver';
 export class ListUserComponent implements OnInit {
 
   private users: User[];
-  constructor(private _userService: UserService) { }
+  constructor(private _userService: UserService, private _router: Router) { }
 
   ngOnInit() {
     this._userService.getUsers().subscribe((users) => {
@@ -28,5 +29,16 @@ export class ListUserComponent implements OnInit {
     }, (error) => {
       console.log(error);
     });
+  }
+
+  updateUser(user) {
+    this._userService.setter(user);
+    this._router.navigate(['/op']);
+  }
+
+  newUser() {
+    let user = new User();
+    this._userService.setter(user);
+    this._router.navigate(['/op']);
   }
 }
